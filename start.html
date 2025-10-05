@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Interactive Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 960px;
+            margin: 40px auto;
+            background-color: #2c2c2c;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            min-height: 600px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            color: #8ab4f8;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        header p {
+            color: #b0b0b0;
+            font-size: 1.1em;
+        }
+
+        /* Branding Image (visible only on choice screen) */
+        .branding-image {
+            text-align: center;
+            margin: 20px 0;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #444;
+            /* Added transition for smoother image changes */
+            transition: opacity 0.3s ease; 
+        }
+        .branding-image img {
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        .branding-image img:hover {
+            opacity: 1;
+        }
+
+        .content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #currentStepContent {
+            animation: fadeIn 0.6s ease-out;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 20px;
+        }
+
+        #stepTitle {
+            color: #e0e0e0;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+        #stepDescription {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+            color: #b0b0b0;
+        }
+
+        .choice-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        .choice-button {
+            padding: 20px 30px;
+            border: 2px solid #8ab4f8;
+            border-radius: 8px;
+            background-color: #3a3a3a;
+            color: #8ab4f8;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 180px;
+            max-width: 250px;
+            text-align: center;
+        }
+        .choice-button:hover {
+            background-color: #4a4a4a;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+        .choice-button img {
+            display: block;
+            margin: 0 auto 15px;
+            max-height: 80px;
+            max-width: 100%;
+            pointer-events: none;
+            /* Turns black icons white for dark mode */
+            filter: brightness(0) invert(1); 
+            transition: filter 0.3s ease;
+        }
+
+        /* Instruction Image (visible on step/completion screens) */
+        .instruction-image {
+            text-align: center;
+            margin: 30px 0;
+            flex-shrink: 0;
+            /* Added transition for smoother image changes */
+            transition: opacity 0.3s ease;
+        }
+        .instruction-image img {
+            max-width: 80%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid #555;
+        }
+
+        .button-group {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.05em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button.primary {
+            background-color: #8ab4f8;
+            color: #1a1a1a;
+        }
+        button.primary:hover {
+            background-color: #a7c7fb;
+            transform: translateY(-1px);
+        }
+        button.secondary {
+            background-color: #5a5a5a;
+            color: #e0e0e0;
+        }
+        button.secondary:hover {
+            background-color: #6a6a6a;
+            transform: translateY(-1px);
+        }
+        button:disabled {
+            background-color: #444;
+            cursor: not-allowed;
+            color: #888;
+            transform: none;
+        }
+
+        .progress-indicator {
+            text-align: center;
+            margin-top: 20px;
+            color: #b0b0b0;
+            font-size: 0.9em;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 25px;
+            }
+            header h1 {
+                font-size: 2em;
+            }
+            .choice-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .choice-button {
+                max-width: 100%;
+                width: 90%;
+            }
+            .instruction-image img, .branding-image img {
+                max-width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="mainTitle"></h1>
+            <p id="mainDescription"></p>
+        </header>
+
+        <!-- Main Product Image - Visible on 'choice' screen -->
+        <div class="branding-image">
+            <img id="brandingImage" src="" alt="Product Image">
+        </div>
+
+        <div class="content-area">
+            <div id="currentStepContent">
+                <h2 id="stepTitle"></h2>
+                <p id="stepDescription"></p>
+                <div class="choice-buttons" id="choiceButtonsContainer">
+                    <!-- Choice buttons will be injected here -->
+                </div>
+                <!-- Step/Completion Image - Visible on instruction screens -->
+                <div class="instruction-image" id="instructionImageContainer">
+                    <img id="instructionImage" src="" alt="Instruction Image">
+                </div>
+            </div>
+            
+            <div class="button-group" id="navigationButtons">
+                <button class="secondary" id="backButton" onclick="prevStep()">Back</button>
+                <button class="primary" id="nextButton" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+
+        <div class="progress-indicator" id="progressIndicator"></div>
+    </div>
+
+    <script>
+        let currentGuide = null;
+        let currentSectionKey = 'choice';
+        let currentStepIndex = 0;
+
+        // --- START GUIDE CONFIGURATION ---
+        const GITHUB_BASE_URL = "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/";
+
+        const guideOne = {
+            id: "glove80-setup",
+            title: "Setup Your MoErgo Glove80",
+            description: "Choose your preferred connection method to get started.",
+            // Main image for the introductory/choice screen
+            brandingImageUrl: GITHUB_BASE_URL + "glove80.png",
+            sections: {
+                choice: {
+                    title: "How would you like to connect?",
+                    description: "The Glove80 offers versatile connectivity. Select the method that best suits your needs.",
+                    choices: [
+                        {
+                            label: "Bluetooth",
+                            icon: GITHUB_BASE_URL + "bluetooth.svg",
+                            targetSection: "bluetooth"
+                        },
+                        {
+                            label: "USB Cable",
+                            icon: GITHUB_BASE_URL + "usb.svg",
+                            targetSection: "usb"
+                        }
+                    ]
+                },
+                bluetooth: [
+                    {
+                        title: "Bluetooth Setup: Step 1 - Power On",
+                        description: "Ensure your Glove80 is charged. Locate the power switch on the bottom of the keyboard and slide it to the 'ON' position. The status LED should light up briefly.",
+                        imageUrl: GITHUB_BASE_URL + "bluetooth_step1_power_on.jpg" 
+                    },
+                    {
+                        title: "Bluetooth Setup: Step 2 - Enter Pairing Mode",
+                        description: "To make your Glove80 discoverable, press and hold the **Fn + B** keys simultaneously. The LED indicator will begin blinking rapidly, signaling it's in pairing mode.",
+                        imageUrl: GITHUB_BASE_URL + "bluetooth_step2_pairing_mode.jpg" 
+                    },
+                    {
+                        title: "Bluetooth Setup: Step 3 - Connect to Your Device",
+                        description: "On your computer, tablet, or phone, navigate to your Bluetooth settings. Find **\"Glove80\"** (or a similar name) in the list of available devices and click to pair. Once connected, the Glove80's LED will stop blinking and glow steadily.",
+                        imageUrl: GITHUB_BASE_URL + "bluetooth_step3_connect_device.jpg" 
+                    }
+                ],
+                usb: [
+                    {
+                        title: "USB Setup: Step 1 - Locate USB Port",
+                        description: "Locate the USB-C port on the top edge of your Glove80 keyboard. Ensure you have a compatible USB-C to USB-A (or USB-C) cable.",
+                        imageUrl: GITHUB_BASE_URL + "usb_step1_locate_port.jpg" 
+                    },
+                    {
+                        title: "USB Setup: Step 2 - Connect the Cable",
+                        description: "Plug one end of the USB cable into your Glove80 and the other end into an available USB port on your computer. Your computer should automatically detect the keyboard.",
+                        imageUrl: GITHUB_BASE_URL + "usb_step2_connect_cable.jpg" 
+                    }
+                ],
+                completion: {
+                    title: "Setup Complete!",
+                    description: "Congratulations! Your MoErgo Glove80 is now connected and ready to use. Enjoy the ergonomic comfort and customizability!",
+                    imageUrl: GITHUB_BASE_URL + "completion_all_set.jpg" 
+                }
+            }
+        };
+        // --- END GUIDE CONFIGURATION ---
+
+        function loadGuide(guide) {
+            currentGuide = guide;
+            document.getElementById('pageTitle').innerText = guide.title;
+            document.getElementById('mainTitle').innerText = guide.title;
+            document.getElementById('mainDescription').innerText = guide.description;
+            // Set the branding image source once on load
+            document.getElementById('brandingImage').src = guide.brandingImageUrl;
+            
+            currentSectionKey = 'choice';
+            currentStepIndex = 0;
+            renderCurrentStep();
+        }
+
+        function renderCurrentStep() {
+            const stepTitle = document.getElementById('stepTitle');
+            const stepDescription = document.getElementById('stepDescription');
+            const choiceButtonsContainer = document.getElementById('choiceButtonsContainer');
+            
+            const brandingImageContainer = document.querySelector('.branding-image'); // Get the branding container
+            const instructionImageContainer = document.getElementById('instructionImageContainer');
+            const instructionImage = document.getElementById('instructionImage');
+            
+            const backButton = document.getElementById('backButton');
+            const nextButton = document.getElementById('nextButton');
+
+            choiceButtonsContainer.innerHTML = ''; // Clear previous choices
+            
+            // 1. Reset/Hide both image containers at the start
+            brandingImageContainer.style.display = 'none';
+            instructionImageContainer.style.display = 'none';
+            instructionImage.src = '';
+            instructionImage.alt = '';
+
+
+            // The main title/description stays the same, so no need to update here
+
+            stepDescription.style.display = 'block'; // Ensure description is visible by default
+
+            if (currentSectionKey === 'choice') {
+                const section = currentGuide.sections.choice;
+                stepTitle.innerText = section.title;
+                stepDescription.innerHTML = section.description;
+
+                // 2a. Show the main product image (brandingImage)
+                brandingImageContainer.style.display = 'block'; 
+
+                choiceButtonsContainer.style.display = 'flex'; // Show choice buttons
+                section.choices.forEach(choice => {
+                    const button = document.createElement('div');
+                    button.className = 'choice-button';
+                    button.onclick = () => {
+                        currentSectionKey = choice.targetSection;
+                        currentStepIndex = 0;
+                        renderCurrentStep();
+                    };
+                    const img = document.createElement('img');
+                    img.src = choice.icon;
+                    img.alt = choice.label + " icon";
+                    button.appendChild(img);
+                    const span = document.createElement('span');
+                    span.innerText = choice.label;
+                    button.appendChild(span);
+                    choiceButtonsContainer.appendChild(button);
+                });
+
+                backButton.style.display = 'none';
+                nextButton.style.display = 'none';
+
+            } else if (currentSectionKey === 'completion') {
+                const section = currentGuide.sections.completion;
+                stepTitle.innerText = section.title;
+                stepDescription.innerHTML = section.description;
+
+                // 2b. Load and show the step-specific image (instructionImage)
+                instructionImage.src = section.imageUrl;
+                instructionImage.alt = section.title + " image";
+                instructionImageContainer.style.display = 'block';
+
+                choiceButtonsContainer.style.display = 'none';
+                backButton.style.display = 'none';
+                nextButton.innerText = "Start Over";
+                nextButton.onclick = resetGuide;
+                nextButton.style.display = 'block';
+
+            } else { // Regular steps (bluetooth or usb)
+                const steps = currentGuide.sections[currentSectionKey];
+                const step = steps[currentStepIndex];
+
+                stepTitle.innerText = step.title;
+                stepDescription.innerHTML = step.description;
+
+                // 2b. Load and show the step-specific image (instructionImage)
+                instructionImage.src = step.imageUrl;
+                instructionImage.alt = step.title + " image";
+                instructionImageContainer.style.display = 'block';
+                
+                choiceButtonsContainer.style.display = 'none';
+                backButton.style.display = 'block';
+                backButton.onclick = prevStep; 
+
+                nextButton.style.display = 'block';
+                nextButton.innerText = (currentStepIndex === steps.length - 1) ? "I've Connected!" : "Next";
+                nextButton.onclick = nextStep; 
+            }
+
+            updateProgressIndicator();
+        }
+
+        function prevStep() {
+            if (currentSectionKey === 'bluetooth' || currentSectionKey === 'usb') {
+                if (currentStepIndex > 0) {
+                    currentStepIndex--;
+                } else {
+                    currentSectionKey = 'choice'; // Go back to choice screen from first step of a flow
+                    currentStepIndex = 0; // Reset index for the choice screen
+                }
+            }
+            renderCurrentStep();
+        }
+
+        function nextStep() {
+            if (currentSectionKey === 'bluetooth') {
+                if (currentStepIndex < currentGuide.sections.bluetooth.length - 1) {
+                    currentStepIndex++;
+                } else {
+                    currentSectionKey = 'completion';
+                }
+            } else if (currentSectionKey === 'usb') {
+                if (currentStepIndex < currentGuide.sections.usb.length - 1) {
+                    currentStepIndex++;
+                } else {
+                    currentSectionKey = 'completion';
+                }
+            }
+            renderCurrentStep();
+        }
+
+        function resetGuide() {
+            currentSectionKey = 'choice';
+            currentStepIndex = 0;
+            renderCurrentStep();
+        }
+
+        function updateProgressIndicator() {
+            let text = "";
+            if (currentSectionKey === 'choice') {
+                text = "Choose Connection Method";
+            } else if (currentSectionKey === 'bluetooth') {
+                text = `Bluetooth Setup: Step ${currentStepIndex + 1} of ${currentGuide.sections.bluetooth.length}`;
+            } else if (currentSectionKey === 'usb') {
+                text = `USB Setup: Step ${currentStepIndex + 1} of ${currentGuide.sections.usb.length}`;
+            } else if (currentSectionKey === 'completion') {
+                text = "Setup Complete!";
+            }
+            document.getElementById('progressIndicator').innerText = text;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGuide(guideOne);
+        });
+    </script>
+</body>
+</html>
