@@ -1,0 +1,58 @@
+{
+    "id": "glove80-setup",
+    "title": "Setup Your MoErgo Glove80",
+    "description": "Choose how to connect your Glove80 to your computer and follow the steps to get started with ease.",
+    "brandingImageUrl": "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/glove80.png",
+    "sections": {
+        "choice": {
+            "title": "Select Your Connection Method",
+            "description": "The Glove80 supports multiple connection options. <br> Pick the one that suits your setup best.",
+            "choices": [
+                {
+                    "label": "Bluetooth",
+                    "icon": "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/bluetooth.svg",
+                    "targetSection": "bluetooth"
+                },
+                {
+                    "label": "USB Cable",
+                    "icon": "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/usb.svg",
+                    "targetSection": "usb"
+                }
+            ]
+        },
+        "bluetooth": [
+            {
+                "title": "Bluetooth Setup: Step 1 - Charge Batteries",
+                "description": "Charge both Glove80 batteries to ~80%. Tap the Magic key to check the battery level.<br>Green lights indicate a sufficient charge.",
+                "imageUrl": "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/battery80.png"
+            },
+            {
+                "title": "Bluetooth Setup: Step 2 - Enter Pairing Mode",
+                "description": "Hold the Magic key and tap Backspace to select Bluetooth profile 0. <br>Clear any previous Bluetooth profiles if necessary.",
+                "imageUrl": "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/bluetooth.png"
+            },
+            {
+                "title": "Bluetooth Setup: Step 3 - Connect to Device",
+                "description": "In your Bluetooth settings, Add Device, select 'Glove80' and connect/pair. <br>If you’ve connected before, remove (unpair) device first.",
+                "imageUrl": "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/connect1_win.png"
+            }
+        ],
+        "usb": [
+            {
+                "title": "USB Setup: Step 1 - Locate USB-C Port",
+                "description": "Find the USB-C port on the top edge of the Glove80.<br>Use the provided USB cable and avoid USB hubs.",
+                "imageUrl": "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/usb_cable.png"
+            },
+            {
+                "title": "USB Setup: Step 2 - Connect the Cable",
+                "description": "Plug the Glove80 into your computer via the USB-C cable. The left half acts as the main controller, with the right half connecting wirelessly.",
+                "imageUrl": "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/usb_cable.png"
+            }
+        ],
+        "completion": {
+            "title": "Setup Complete!",
+            "description": "Your MoErgo Glove80 is ready! Enjoy its ergonomic design and customizable features.",
+            "imageUrl": "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/connected.png"
+        }
+    }
+}
