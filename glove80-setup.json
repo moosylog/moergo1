@@ -35,6 +35,11 @@
                 "title": "Bluetooth Setup: Step 3 - Connect to Device",
                 "description": "In your Bluetooth settings, Add Device, select 'Glove80' and connect/pair. <br>If you’ve connected before, remove (unpair) device first.",
                 "imageUrl": "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/connect1_win.png"
+            },
+            {
+                "title": "Bluetooth Setup: Step 4 - ALL GOOD?",
+                "description": "If not read the docs or ask for help.",
+                "imageUrl": "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/connect1_win.png"
             }
         ],
         "usb": [
