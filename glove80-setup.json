@@ -32,13 +32,13 @@
                 "imageUrl": "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/bluetooth.png"
             },
             {
-                "title": "Bluetooth Setup: Step 3 - Connect to Device",
+                "title": "Bluetooth Setup: Step 3a - Connect to Device on Windows",
                 "description": "In your Bluetooth settings, Add Device, select 'Glove80' and connect/pair. <br>If you’ve connected before, remove (unpair) device first.",
                 "imageUrl": "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/connect1_win.png"
             },
             {
-                "title": "Bluetooth Setup: Step 4 - ALL GOOD?",
-                "description": "If not read the docs or ask for help.",
+                "title": "Bluetooth Setup: Step 3b - Connect to Device on MacOS",
+                "description": "Let's make a macOS screenshot.",
                 "imageUrl": "https://raw.githubusercontent.com/moosylog/moergo1/refs/heads/main/connect1_win.png"
             }
         ],
